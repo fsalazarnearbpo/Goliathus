@@ -5,7 +5,7 @@ import { GameScene } from "./gameScene";
 import { ScoreScene } from "./scoreScene";
 
 const config: GameConfig = {
-  title: "Goliathus",
+  title: "Pochito",
   width: 800,
   height: 600,
   parent: "game",
