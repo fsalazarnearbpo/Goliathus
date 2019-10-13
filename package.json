@@ -2,14 +2,15 @@
   "name": "goliathus",
   "version": "0.1.0",
   "description": "Goliathus game (Phaser 3 + TypeScript)",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
     "build": "webpack",
-    "start": "webpack --watch & live-server --port=8085"
+    "start": "webpack-dev-server --port 8085"
   },
   "author": "Francisco Daniel Salazar Aguirre",
   "license": "MIT",
   "devDependencies": {
+    "webpack-dev-server": "^3.2.1",
     "live-server": "^1.2.1",
     "phaser": "^3.20.0",
     "ts-loader": "^6.2.0",
