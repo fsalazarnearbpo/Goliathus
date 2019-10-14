@@ -12,7 +12,7 @@ export class ScoreScene extends Phaser.Scene {
   }
 
   init(params: any): void {
-    this.score = params.starsCaught;
+    this.score = params.bonesCaught;
   }
 
   create(): void {

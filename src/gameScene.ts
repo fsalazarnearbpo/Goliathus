@@ -2,9 +2,9 @@ import "phaser";
 
 export class GameScene extends Phaser.Scene {
   delta: number;
-  lastStarTime: number;
-  starsCaught: number;
-  starsFallen: number;
+  lastboneTime: number;
+  bonesCaught: number;
+  bonesFallen: number;
   sand: Phaser.Physics.Arcade.StaticGroup;
   info: Phaser.GameObjects.Text;
 
@@ -16,16 +16,18 @@ export class GameScene extends Phaser.Scene {
 
   init(/*params: any*/): void {
     this.delta = 1000;
-    this.lastStarTime = 0;
-    this.starsCaught = 0;
-    this.starsFallen = 0;
+    this.lastboneTime = 0;
+    this.bonesCaught = 0;
+    this.bonesFallen = 0;
   }
 
   preload(): void {
     this.load.setBaseURL("https://raw.githubusercontent.com/fsalazarnearbpo/" +
       "goliathus/master/");
-    this.load.image("star", "assets/star.png");
+    this.load.image("bone", "assets/bone.png");
     this.load.image("sand", "assets/sand.jpg");
+    this.load.image("puppy", "assets/puppy.jpg");
+    this.load.image("corgitoon", "assets/corgitoon.png");
   }
 
   create(): void {
@@ -42,54 +44,54 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(time: number): void {
-    var diff: number = time - this.lastStarTime;
+    var diff: number = time - this.lastboneTime;
     if (diff > this.delta) {
-      this.lastStarTime = time;
+      this.lastboneTime = time;
       if (this.delta > 500) {
         this.delta -= 20;
       }
-      this.emitStar();
+      this.emitbone();
     }
     this.info.text =
-      this.starsCaught + " caught - " +
-      this.starsFallen + " fallen (max 3)";
+      this.bonesCaught + " caught - " +
+      this.bonesFallen + " fallen (max 3)";
   }
 
-  private onClick(star: Phaser.Physics.Arcade.Image): () => void {
+  private onClick(bone: Phaser.Physics.Arcade.Image): () => void {
     return function () {
-      star.setTint(0x00ff00);
-      star.setVelocity(0, 0);
-      this.starsCaught += 1;
-      this.time.delayedCall(100, function (star) {
-        star.destroy();
-      }, [star], this);
+      bone.setTint(0x00ff00);
+      bone.setVelocity(0, 0);
+      this.bonesCaught += 1;
+      this.time.delayedCall(100, function (bone) {
+        bone.destroy();
+      }, [bone], this);
     }
   }
 
-  private onFall(star: Phaser.Physics.Arcade.Image): () => void {
+  private onFall(bone: Phaser.Physics.Arcade.Image): () => void {
     return function () {
-      star.setTint(0xff0000);
-      this.starsFallen += 1;
-      this.time.delayedCall(100, function (star) {
-        star.destroy();
-        if (this.starsFallen > 2) {
-          this.scene.start("ScoreScene", { starsCaught: this.starsCaught });
+      bone.setTint(0xff0000);
+      this.bonesFallen += 1;
+      this.time.delayedCall(100, function (bone) {
+        bone.destroy();
+        if (this.bonesFallen > 2) {
+          this.scene.start("ScoreScene", { bonesCaught: this.bonesCaught });
         }
-      }, [star], this);
+      }, [bone], this);
     }
   }
 
-  private emitStar(): void {
-    var star: Phaser.Physics.Arcade.Image;
+  private emitbone(): void {
+    var bone: Phaser.Physics.Arcade.Image;
     var x = Phaser.Math.Between(25, 775);
     var y = 26;
-    star = this.physics.add.image(x, y, "star");
+    bone = this.physics.add.image(x, y, "bone");
 
-    star.setDisplaySize(50, 50);
-    star.setVelocity(0, 200);
-    star.setInteractive();
+    bone.setDisplaySize(50, 50);
+    bone.setVelocity(0, 200);
+    bone.setInteractive();
 
-    star.on('pointerdown', this.onClick(star), this);
-    this.physics.add.collider(star, this.sand, this.onFall(star), null, this);
+    bone.on('pointerdown', this.onClick(bone), this);
+    this.physics.add.collider(bone, this.sand, this.onFall(bone), null, this);
   }
 };
