@@ -10,8 +10,17 @@ export class WelcomeScene extends Phaser.Scene {
     });
   }
 
+  preload(): void {
+    this.load.setBaseURL("https://raw.githubusercontent.com/fsalazarnearbpo/" +
+      "goliathus/master/");
+    this.load.image("corgitoon", "assets/corgitoon.png");
+  }
+
   create(): void {
     var titleText: string = "Pochito";
+    var puppy: Phaser.Physics.Arcade.Image;
+    puppy = this.physics.add.image(650, 250, "corgitoon");
+    puppy.setDisplaySize(300,500);
     this.title = this.add.text(150, 200, titleText,
       { font: '128px Arial Bold', fill: '#FBFBAC' });
 

@@ -26,7 +26,7 @@ export class GameScene extends Phaser.Scene {
       "goliathus/master/");
     this.load.image("bone", "assets/bone.png");
     this.load.image("sand", "assets/sand.jpg");
-    this.load.image("puppy", "assets/puppy.jpg");
+    this.load.image("puppy", "assets/puppy.png");
     this.load.image("corgitoon", "assets/corgitoon.png");
   }
 
@@ -59,12 +59,20 @@ export class GameScene extends Phaser.Scene {
 
   private onClick(bone: Phaser.Physics.Arcade.Image): () => void {
     return function () {
+      var puppy: Phaser.Physics.Arcade.Image;
       bone.setTint(0x00ff00);
       bone.setVelocity(0, 0);
       this.bonesCaught += 1;
+      puppy = this.physics.add.image(this.input.mousePointer.x+30, this.input.mousePointer.y+20, "puppy");
+      puppy.setDisplaySize(250, 150);
+            
       this.time.delayedCall(100, function (bone) {
         bone.destroy();
       }, [bone], this);
+
+      this.time.delayedCall(500, function (puppy) {
+        puppy.destroy();
+      }, [puppy], this);
     }
   }
 
